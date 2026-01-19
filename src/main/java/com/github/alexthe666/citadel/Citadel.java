@@ -131,7 +131,7 @@ public class Citadel {
         final PayloadRegistrar registrar = event.registrar("citadel").versioned("2.7.0").optional();
         registrar.playToServer(PropertiesMessage.TYPE, PropertiesMessage.CODEC, PropertiesMessage::handle);
         registrar.playToClient(AnimationMessage.TYPE, AnimationMessage.CODEC, AnimationMessage::handle);
-        registrar.playToClient(DanceJukeboxMessage.TYPE, DanceJukeboxMessage.CODEC, DanceJukeboxMessage::handle);
+    registrar.playBidirectional(DanceJukeboxMessage.TYPE, DanceJukeboxMessage.CODEC, DanceJukeboxMessage::handle);
         registrar.playToClient(SyncePathMessage.TYPE, SyncePathMessage.CODEC, SyncePathMessage::handle);
         registrar.playToClient(SyncPathReachedMessage.TYPE, SyncPathReachedMessage.CODEC, SyncPathReachedMessage::handle);
         registrar.playToClient(SyncClientTickRateMessage.TYPE, SyncClientTickRateMessage.CODEC, SyncClientTickRateMessage::handle);
