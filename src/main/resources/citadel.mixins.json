@@ -6,7 +6,8 @@
   "refmap": "citadel.refmap.json",
   "mixins": [
     "BlockBehaviourAccessor",
-    "NoiseGeneratorSettingsMixin"
+    "NoiseGeneratorSettingsMixin",
+    "LivingEntityMixin"
   ],
   "client": [
   ],
