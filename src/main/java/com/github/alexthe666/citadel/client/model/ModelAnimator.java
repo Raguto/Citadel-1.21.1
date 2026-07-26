@@ -17,8 +17,8 @@ public class ModelAnimator {
     private int prevTempTick;
     private boolean correctAnimation;
     private IAnimatedEntity entity;
-    private HashMap<AdvancedModelBox, Transform> transformMap;
-    private HashMap<AdvancedModelBox, Transform> prevTransformMap;
+    private final HashMap<AdvancedModelBox, Transform> transformMap;
+    private final HashMap<AdvancedModelBox, Transform> prevTransformMap;
 
     public ModelAnimator() {
         this.tempTick = 0;
@@ -55,7 +55,7 @@ public class ModelAnimator {
     }
 
     /**
-     * Start an model
+     * Start a model
      *
      * @param animation the model instance
      * @return true if it's the current model
@@ -158,7 +158,11 @@ public class ModelAnimator {
                     box.rotationPointZ += transform.getOffsetZ();
                 }
             } else {
-                float frameTime = Minecraft.getInstance().getTimer().getGameTimeDeltaTicks();
+                // Use the fraction of the current tick that's elapsed (the old
+                // "partial tick"), not the delta since the last frame, otherwise
+                // interpolation barely moves between ticks and keyframe animations
+                // stutter at ~20fps instead of the render framerate
+                float frameTime = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false);
                 float tick = (animationTick - this.prevTempTick + frameTime) / (this.tempTick - this.prevTempTick);
                 float inc = Mth.sin((float) (tick * Math.PI / 2.0F)), dec = 1.0F - inc;
                 for (AdvancedModelBox box : this.prevTransformMap.keySet()) {
